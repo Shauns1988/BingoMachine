@@ -1,40 +1,35 @@
+import java.util.List;
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class BingoMachine {
-    private int gameSize;
-    private ArrayList<Ball> balls = new ArrayList<Ball>();
-    private ArrayList<Ball> drawnBalls = new ArrayList<Ball>();
+    private List<Ball> balls = new ArrayList<Ball>();
+    private List<Ball> drawnBalls = new ArrayList<Ball>();
 
 
     public BingoMachine(int gameSize) {
-        this.gameSize = gameSize;
         for(int i = 0; i < gameSize; i++) {
             balls.add(new Ball(i+1));
         }
     }
 
-    public int getRandomNumber(int min, int max) {
-        return (int) ((Math.random() * (max - min)) + min);
-    }
-
     public Ball drawBall() {
-        int random = getRandomNumber(0,this.gameSize);
-        Ball drawn = balls.get(random);
+        Collections.shuffle(balls);
+        Ball drawn = balls.get(0);
         drawnBalls.add(drawn);
         balls.remove(drawn);
-        gameSize--;
         return drawn;
     }
     public int getGameSize() {
-        return this.gameSize;
+        return balls.size();
     }
 
     public String getDrawnBalls() {
-        String drawnBallsString = "";
+        StringBuilder drawnBallsString = new StringBuilder();
         for (Ball ball : drawnBalls) {
-            drawnBallsString += ball.toString() + " ";
+            drawnBallsString.append(ball.toString() + " ");
         }
-        return drawnBallsString;
+        return drawnBallsString.toString();
     }
 
 }
